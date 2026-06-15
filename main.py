@@ -1,7 +1,7 @@
 from direct.showbase.ShowBase import ShowBase
 from panda3d.core import PerspectiveLens
 from panda3d.core import loadPrcFileData
-from panda3d.core import PointLight, Spotlight, PointLight, AmbientLight
+from panda3d.core import PointLight, Spotlight, AmbientLight
 from panda3d.core import Vec3, Vec4, WindowProperties, BamCache
 from direct.interval.IntervalGlobal import LerpPosInterval, Parallel
 import random
@@ -97,19 +97,19 @@ class main(ShowBase):
         curtains_model.set_two_sided(False)
         curtains_model.set_shader_input('ao',1.0)
 
-        cyprus_model = self.loader.load_model('NewSponza_CypressTree_BK_SM.glb')
-        cyprus_model.reparent_to(self.render)
-        cyprus_model.set_pos(-3, 0, 0)
-        cyprus_model.set_scale(1)
-        cyprus_model.set_shader_input('ao',1.0)
-        cyprus_model.set_two_sided(False)
+        cypress_model = self.loader.load_model('NewSponza_CypressTree_BK_SM.glb')
+        cypress_model.reparent_to(self.render)
+        cypress_model.set_pos(-3, 0, 0)
+        cypress_model.set_scale(1)
+        cypress_model.set_two_sided(False)
+        cypress_model.set_shader_input('ao',1.0)
         
-        cyprus_model = self.loader.load_model('NewSponza_CypressTree_LF.glb')
-        cyprus_model.reparent_to(self.render)
-        cyprus_model.set_pos(-3, 0, 0)
-        cyprus_model.set_scale(1)
-        cyprus_model.set_shader_input('ao',1.0)
-        cyprus_model.set_two_sided(False)
+        cypress_model = self.loader.load_model('NewSponza_CypressTree_LF.glb')
+        cypress_model.reparent_to(self.render)
+        cypress_model.set_pos(-3, 0, 0)
+        cypress_model.set_scale(1)
+        cypress_model.set_two_sided(False)
+        cypress_model.set_shader_input('ao',1.0)
         
         amb_light = AmbientLight('amblight')
         amb_light.set_color((1,1,1.2,1))
