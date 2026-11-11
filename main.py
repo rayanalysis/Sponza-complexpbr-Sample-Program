@@ -59,7 +59,7 @@ class main(ShowBase):
         base_env = loader.load_model('daytime_skybox.gltf')
         base_env.name = 'basic_skybox'
         base_env.reparent_to(self.render)
-        base_env.set_scale(1)
+        base_env.set_scale(0.75)
         base_env.set_pos(0,0,0)
         base_env.set_light(env_light_1)
 
@@ -78,7 +78,7 @@ class main(ShowBase):
         base_env.set_light_off(spotlight_1_node)
         
         spotlight_2 = Spotlight('spotlight_2')
-        spotlight_2.set_color((1,1,0.75,1))
+        spotlight_2.set_color((0.5,0.5,0.3625,1))
         # spotlight_2.set_shadow_caster(True, 8096, 8096)
         lens = PerspectiveLens()
         lens.set_fov(85)
@@ -91,13 +91,13 @@ class main(ShowBase):
         base_env.set_light_off(spotlight_2_node)
 
         # complexpbr
-        complexpbr.apply_shader(self.render, shadow_boost=0.05)
+        complexpbr.apply_shader(self.render, shadow_boost=0.01)
         self.complexpbr_map_z = 0.0
         self.complexpbr_z_tracking = False
         self.cube_buffer.set_sort(-1000)  # ensures the reflections don't lag a frame behind
         
         for x in self.complexpbr_map.find_all_matches('**/+Camera'):
-            x.node().get_lens().set_near_far(0.01, 3000)
+            x.node().get_lens().set_near_far(0.1, 2000)
         
         def quality_mode():
             complexpbr.screenspace_init()
@@ -105,19 +105,18 @@ class main(ShowBase):
             self.screen_quad.set_shader_input("bloom_intensity", 0.25)
             self.screen_quad.set_shader_input("bloom_threshold", 0.3)
             self.screen_quad.set_shader_input("bloom_blur_width", 20)
-            self.screen_quad.set_shader_input("bloom_samples", 0)
+            self.screen_quad.set_shader_input("bloom_samples", 4)
             self.screen_quad.set_shader_input('ssr_samples', 0)
             self.screen_quad.set_shader_input('hsv_r', 1.0)
             self.screen_quad.set_shader_input('hsv_g', 1.1)
             self.screen_quad.set_shader_input('hsv_b', 1.0)
             self.screen_quad.set_shader_input('final_brightness', 1.4)
             # start a complexpbr task to enable auto-smoothed SSAO as of 0.6.6
-            complexpbr.smooth_ssao(ssao_samples=32,ssao_radius=0.01,ssao_bias=0.05,ssao_intensity=0.8,ssao_step_time=0.1)
+            complexpbr.smooth_ssao(ssao_samples=32,ssao_radius=0.7,ssao_bias=0.7,ssao_intensity=0.6,ssao_step_time=0.01)
+            # complexpbr.smooth_ssao()
             # complexpbr.remove_smooth_ssao()
             
-            # self.camLens.set_near_far(0.3,12000)
-            self.camLens.set_near_far(1.0,3000)
-            # self.camLens.set_near_far(0.2,6000)
+            self.camLens.set_near_far(0.1,2000)
             camera_near = self.camLens.get_near()
             camera_far = self.camLens.get_far()
             print(camera_near, ' = camera_near', camera_far, ' = camera_far')
@@ -157,6 +156,7 @@ class main(ShowBase):
         cypress_model.set_scale(1)
         cypress_model.set_two_sided(False)
         cypress_model.set_shader_input('ao',1.0)
+        cypress_model.set_shader_input('shadow_boost',0.1)
         
         cypress_model = self.loader.load_model('NewSponza_CypressTree_LF.glb')
         cypress_model.reparent_to(self.render)
